@@ -4,6 +4,7 @@ import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import { useWindowStore } from "@/store/useWindowStore";
 import ContextMenu from "@/components/ContextMenu";
 import { AnimatePresence } from "framer-motion";
+import EasterEgg from "@/components/EasterEgg";
 import { useTheme } from "@/hooks/useTheme";
 import { useRouter } from "next/navigation";
 import Taskbar from "@/components/Taskbar";
@@ -79,6 +80,7 @@ export default function Desktop() {
       {contextMenu && <ContextMenu x={contextMenu.x} y={contextMenu.y} items={contextItems} onClose={() => setContextMenu(null)} />}
 
       <Taskbar />
+      <EasterEgg />
     </div>
   );
 }

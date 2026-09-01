@@ -1,18 +1,37 @@
 "use client";
 
+import { useEasterEggStore } from "@/store/useEasterEggStore";
 import { useWindowStore } from "@/store/useWindowStore";
 import { useEffect, useState } from "react";
 import { useTheme } from "@/hooks/useTheme";
 import { APPS } from "@/data/apps";
+import { useRef } from "react";
 
 export default function Taskbar() {
   const windows = useWindowStore((s) => s.windows);
   const focusWindow = useWindowStore((s) => s.focusWindow);
   const [time, setTime] = useState("");
 
+  const clickCountRef = useRef(0);
+  const clickTimerRef = useRef(null);
+  const trigger = useEasterEggStore((s) => s.trigger);
+
   const { theme, toggleTheme } = useTheme();
 
   const THEME_ICONS = { blue: "🌙", sakura: "🌸", matrix: "💻" };
+
+  function handleLogoClick() {
+    clickCountRef.current += 1;
+    if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
+    clickTimerRef.current = setTimeout(() => {
+      clickCountRef.current = 0;
+    }, 700);
+
+    if (clickCountRef.current >= 5) {
+      trigger();
+      clickCountRef.current = 0;
+    }
+  }
 
   useEffect(() => {
     function update() {
@@ -27,7 +46,9 @@ export default function Taskbar() {
 
   return (
     <div className="taskbar">
-      <div className="task-logo">✧ PERSEUS-OS</div>
+      <div className="task-logo" onClick={handleLogoClick} style={{ cursor: "pointer" }}>
+        ✧ PERSEUS-OS
+      </div>
       <div className="task-items">
         {openIds.map((id) => {
           const meta = APPS.find((a) => a.id === id);

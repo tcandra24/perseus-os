@@ -14,6 +14,10 @@ export default function AboutApp() {
         <div className="exp-meta">SHORT-FORM VIDEO</div>
         Memproduksi konten video sinematik berbasis AI untuk TikTok, Reels, dan Shorts.
       </div>
+
+      <a className="cv-download" href="/cv/perseus-cv.pdf" download="perseus-cv.pdf">
+        📄 DOWNLOAD CV
+      </a>
     </>
   );
 }

@@ -11,7 +11,16 @@ function runCommand(input) {
 
   if (cmd === "") return [];
   if (cmd === "help") {
-    return ["COMMAND YANG TERSEDIA:", "  whoami        - tentang saya", "  skills        - tech stack", "  projects      - daftar proyek", "  contact       - cara hubungi saya", "  sudo hire-me  - ??? coba aja", "  clear         - bersihkan layar"];
+    return [
+      "COMMAND YANG TERSEDIA:",
+      "  whoami        - tentang saya",
+      "  skills        - tech stack",
+      "  projects      - daftar proyek",
+      "  contact       - cara hubungi saya",
+      "  sudo hire-me  - ??? coba aja",
+      "  cv / resume   - download CV saya",
+      "  clear         - bersihkan layar",
+    ];
   }
   if (cmd === "whoami") {
     return ["Perseus — Full-Stack Developer & AI Content Creator", "Base: Indonesia. Stack: Next.js, Laravel, Supabase, Express.js.", "Juga bikin video sinematik AI-generated untuk short-form content."];
@@ -27,6 +36,12 @@ function runCommand(input) {
   }
   if (cmd === "sudo hire-me") {
     return ["Permission granted. ✦", "Perseus sedang terbuka untuk kolaborasi/kerja sama.", "Buka window Contact buat kirim pesan langsung!"];
+  }
+  if (cmd === "cv" || cmd === "resume") {
+    if (typeof window !== "undefined") {
+      window.open("/cv/perseus-cv.pdf", "_blank");
+    }
+    return ["Membuka CV di tab baru... 📄"];
   }
   if (cmd === "clear") {
     return { clear: true };

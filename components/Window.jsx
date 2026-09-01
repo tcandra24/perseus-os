@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useWindowStore } from "@/store/useWindowStore";
 import { APP_CONTENT } from "@/components/apps";
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -22,6 +22,7 @@ export default function Window({ id, meta }) {
   const toggleMaximize = useWindowStore((s) => s.toggleMaximize);
 
   const isMobile = useIsMobile();
+  const shouldReduceMotion = useReducedMotion();
 
   const dragRef = useRef({ dragging: false, offsetX: 0, offsetY: 0 });
   const resizeRef = useRef({ resizing: false, startX: 0, startY: 0, startW: 0, startH: 0 });
@@ -104,10 +105,10 @@ export default function Window({ id, meta }) {
       className="window"
       style={style}
       onMouseDown={() => focusWindow(id)}
-      initial={{ opacity: 0, scale: 0.9, y: 12 }}
+      initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.9, y: 12 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.9, y: 12 }}
-      transition={{ duration: 0.18, ease: "easeOut" }}
+      exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.9, y: 12 }}
+      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.18, ease: "easeOut" }}
     >
       <div className="title-bar" onPointerDown={handleDragPointerDown} onPointerMove={handleDragPointerMove} onPointerUp={handleDragPointerUp}>
         <div className="title-text">
