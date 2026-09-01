@@ -1,4 +1,5 @@
 import "./globals.css";
+import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 
 export const metadata = {
   metadataBase: new URL("https://perseus-os.vercel.app"),
@@ -6,10 +7,17 @@ export const metadata = {
   description: "Portofolio interaktif bergaya desktop OS retro-anime milik Perseus.",
 };
 
+export const viewport = {
+  themeColor: "#0a1230",
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="id">
-      <body>{children}</body>
+      <body>
+        {children}
+        <ServiceWorkerRegister />
+      </body>
     </html>
   );
 }
