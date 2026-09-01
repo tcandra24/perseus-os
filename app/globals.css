@@ -1,0 +1,679 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+:root {
+  --bg-deep: #0a1230;
+  --bg-mid: #101d42;
+  --panel: #142752;
+  --panel-2: #1b3366;
+  --pink: #ff6ec7;
+  --cyan: #5eead9;
+  --yellow: #ffe37e;
+  --border-soft: #4a6ea0;
+  --text-hi: #f2f6ff;
+  --text-mid: #b7c6e8;
+  --text-low: #7688b3;
+  --ok: #7dffb0;
+  --wip: #ffe37e;
+}
+
+[data-theme="sakura"] {
+  --bg-deep: #2b0f22;
+  --bg-mid: #3a1830;
+  --panel: #45213b;
+  --panel-2: #572a4a;
+  --pink: #ffb6d9;
+  --cyan: #ffe1f0;
+  --yellow: #ffd9a0;
+  --border-soft: #8a5e7c;
+  --text-hi: #fff5fa;
+  --text-mid: #e3bcd3;
+  --text-low: #a97a95;
+  --ok: #b6f2c0;
+  --wip: #ffd9a0;
+}
+
+[data-theme="matrix"] {
+  --bg-deep: #030805;
+  --bg-mid: #060f08;
+  --panel: #0a180c;
+  --panel-2: #0f2412;
+  --pink: #39ff6a;
+  --cyan: #7cffa0;
+  --yellow: #b6ff9c;
+  --border-soft: #1f5c2e;
+  --text-hi: #d6ffe0;
+  --text-mid: #6fd98a;
+  --text-low: #3d8a52;
+  --ok: #39ff6a;
+  --wip: #b6ff9c;
+}
+
+/* efek "digital rain" tipis di scanline khusus tema matrix */
+[data-theme="matrix"] .scanlines {
+  mix-blend-mode: screen;
+  opacity: 0.5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+  background: var(--bg-deep);
+  color: var(--text-hi);
+}
+
+.desktop {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(circle at 15% 15%, rgba(255, 110, 199, 0.18), transparent 45%), radial-gradient(circle at 85% 20%, rgba(94, 234, 217, 0.14), transparent 45%), linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-mid) 55%, #060c1f 100%);
+}
+
+.grid-floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 46px;
+  height: 46%;
+  background-image: linear-gradient(rgba(255, 110, 199, 0.28) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 110, 199, 0.28) 1px, transparent 1px);
+  background-size: 42px 42px;
+  transform: perspective(260px) rotateX(58deg);
+  transform-origin: bottom;
+  opacity: 0.35;
+  pointer-events: none;
+  mask-image: linear-gradient(to top, black, transparent);
+  -webkit-mask-image: linear-gradient(to top, black, transparent);
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 0px, rgba(0, 0, 0, 0.15) 1px, transparent 2px, transparent 3px);
+  pointer-events: none;
+  z-index: 998;
+  mix-blend-mode: overlay;
+}
+
+.star {
+  position: absolute;
+  color: var(--yellow);
+  opacity: 0.8;
+  animation: twinkle 2.4s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+/* ---- Icons ---- */
+.icon-grid {
+  position: absolute;
+  top: 30px;
+  left: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  z-index: 2;
+}
+
+.icon {
+  width: 88px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 6px 4px;
+  border-radius: 4px;
+  user-select: none;
+}
+.icon:hover .icon-glyph {
+  transform: translateY(-3px) rotate(-2deg);
+  box-shadow: 3px 3px 0 var(--pink);
+}
+.icon:active .icon-glyph {
+  transform: translateY(0) rotate(0);
+}
+
+.icon-glyph {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  background: linear-gradient(160deg, var(--panel-2), var(--panel));
+  border: 2px solid var(--border-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.35);
+}
+
+.icon-label {
+  font-family: "Press Start 2P", monospace;
+  font-size: 8px;
+  line-height: 1.4;
+  color: var(--text-mid);
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+/* ---- Window ---- */
+.window {
+  position: absolute;
+  min-width: 300px;
+  background: var(--panel);
+  border: 3px solid var(--pink);
+  border-radius: 4px;
+  box-shadow:
+    6px 6px 0 rgba(0, 0, 0, 0.4),
+    0 0 24px rgba(255, 110, 199, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.title-bar {
+  height: 40px;
+  background: linear-gradient(90deg, #ff6ec7, #b46cff);
+  border-bottom: 3px solid var(--pink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px 0 12px;
+  cursor: grab;
+  flex-shrink: 0;
+  touch-action: none;
+}
+.title-bar:active {
+  cursor: grabbing;
+}
+
+.title-text {
+  font-family: "Press Start 2P", monospace;
+  font-size: 9px;
+  color: #081226;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.win-controls {
+  display: flex;
+  gap: 5px;
+}
+
+.win-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  border: 2px solid #081226;
+  background: #fdf3ff;
+  color: #081226;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: 700;
+}
+.win-btn:hover {
+  background: var(--yellow);
+}
+
+.window-body {
+  flex: 1;
+  min-height: 0;
+  padding: 20px;
+  overflow-y: auto;
+  color: var(--text-mid);
+  font-size: 13.5px;
+  line-height: 1.65;
+  background: radial-gradient(circle at 100% 0%, rgba(255, 110, 199, 0.06), transparent 40%), var(--panel);
+}
+
+.resize-handle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 18px;
+  height: 18px;
+  cursor: nwse-resize;
+  z-index: 5;
+  touch-action: none;
+}
+.resize-handle::after {
+  content: "";
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--pink);
+  border-bottom: 2px solid var(--pink);
+}
+
+/* ---- Content blocks ---- */
+.section-title {
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  color: var(--cyan);
+  margin: 0 0 16px 0;
+}
+
+.project-card {
+  border: 2px solid var(--border-soft);
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  background: var(--bg-mid);
+}
+.project-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  gap: 8px;
+}
+.project-name {
+  color: var(--text-hi);
+  font-weight: 700;
+  font-size: 14px;
+}
+.badge {
+  font-family: "Press Start 2P", monospace;
+  font-size: 8px;
+  padding: 4px 8px;
+  border-radius: 100px;
+  border: 2px solid;
+  white-space: nowrap;
+}
+.badge-done {
+  color: #14311f;
+  background: var(--ok);
+  border-color: var(--ok);
+}
+.badge-wip {
+  color: #3a2c00;
+  background: var(--wip);
+  border-color: var(--wip);
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 9px;
+}
+.tag {
+  font-family: "Press Start 2P", monospace;
+  font-size: 8px;
+  color: var(--bg-deep);
+  background: var(--cyan);
+  padding: 4px 7px;
+  border-radius: 4px;
+}
+
+.exp-item {
+  border-left: 3px solid var(--pink);
+  padding-left: 14px;
+  margin-bottom: 18px;
+  position: relative;
+}
+.exp-item::before {
+  content: "★";
+  position: absolute;
+  left: -11px;
+  top: 0;
+  color: var(--yellow);
+  font-size: 12px;
+}
+.exp-role {
+  color: var(--text-hi);
+  font-weight: 700;
+  font-size: 13.5px;
+}
+.exp-meta {
+  font-family: "Press Start 2P", monospace;
+  font-size: 8px;
+  color: var(--cyan);
+  margin: 4px 0 8px;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-hi);
+  text-decoration: none;
+  border: 2px solid var(--border-soft);
+  padding: 11px 14px;
+  border-radius: 6px;
+  margin-bottom: 9px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  background: var(--bg-mid);
+}
+.contact-link:hover {
+  border-color: var(--pink);
+  color: var(--pink);
+}
+
+/* ---- Taskbar ---- */
+.taskbar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 46px;
+  background: #060c1f;
+  border-top: 3px solid var(--pink);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 8px;
+  z-index: 999;
+}
+
+.task-logo {
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  color: var(--pink);
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.task-items {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.task-item {
+  font-family: "Press Start 2P", monospace;
+  font-size: 9px;
+  color: var(--text-mid);
+  background: var(--panel);
+  border: 2px solid var(--border-soft);
+  padding: 7px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.task-item:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+.clock {
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  color: var(--cyan);
+  background: #0e0820;
+  border: 2px solid var(--cyan);
+  padding: 6px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.hint {
+  position: absolute;
+  bottom: 58px;
+  left: 26px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 8px;
+  color: var(--text-low);
+  z-index: 1;
+  line-height: 1.6;
+}
+
+.boot-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-deep);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  z-index: 9999;
+}
+.boot-title {
+  font-family: "Press Start 2P", monospace;
+  color: var(--pink);
+  font-size: 16px;
+}
+.boot-bar {
+  width: 240px;
+  height: 14px;
+  border: 2px solid var(--cyan);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.boot-bar-fill {
+  height: 100%;
+  background: var(--cyan);
+  transition: width 150ms linear;
+}
+.boot-text {
+  font-family: "Press Start 2P", monospace;
+  color: var(--text-mid);
+  font-size: 10px;
+}
+
+.context-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1998;
+}
+
+.context-menu {
+  position: fixed;
+  z-index: 1999;
+  background: var(--panel);
+  border: 2px solid var(--pink);
+  border-radius: 6px;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.4);
+  min-width: 190px;
+  overflow: hidden;
+  padding: 4px;
+}
+
+.context-item {
+  font-family: "Press Start 2P", monospace;
+  font-size: 9px;
+  color: var(--text-mid);
+  padding: 10px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.context-item:hover {
+  background: var(--panel-2);
+  color: var(--pink);
+}
+
+.theme-toggle {
+  font-size: 16px;
+  background: var(--panel);
+  border: 2px solid var(--border-soft);
+  border-radius: 4px;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+}
+.theme-toggle:hover {
+  border-color: var(--pink);
+}
+
+.project-card-clickable {
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    border-color 120ms ease;
+}
+.project-card-clickable:hover {
+  border-color: var(--pink);
+  transform: translateY(-2px);
+}
+
+.detail-back {
+  font-family: "Press Start 2P", monospace;
+  font-size: 9px;
+  color: var(--cyan);
+  cursor: pointer;
+  margin-bottom: 14px;
+  display: inline-block;
+}
+.detail-back:hover {
+  color: var(--pink);
+}
+
+.gallery-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 2px solid var(--border-soft);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--bg-mid);
+}
+
+.gallery-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.gallery-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  border: 2px solid var(--border-soft);
+  background: var(--bg-mid);
+  color: var(--text-hi);
+  font-size: 14px;
+  cursor: pointer;
+}
+.gallery-btn:hover {
+  border-color: var(--pink);
+  color: var(--pink);
+}
+
+.gallery-dots {
+  display: flex;
+  gap: 6px;
+}
+.gallery-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-soft);
+  cursor: pointer;
+}
+.gallery-dot.active {
+  background: var(--pink);
+}
+
+.gallery-empty {
+  font-family: "Press Start 2P", monospace;
+  font-size: 9px;
+  color: var(--text-low);
+  padding: 30px 10px;
+  text-align: center;
+  border: 2px dashed var(--border-soft);
+  border-radius: 6px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.contact-input {
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  background: var(--bg-mid);
+  border: 2px solid var(--border-soft);
+  border-radius: 6px;
+  padding: 10px 12px;
+  color: var(--text-hi);
+  outline: none;
+}
+.contact-input:focus {
+  border-color: var(--pink);
+}
+.contact-input::placeholder {
+  color: var(--text-low);
+}
+
+.contact-textarea {
+  resize: vertical;
+  font-family: "Poppins", sans-serif;
+}
+
+.contact-submit {
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  background: var(--pink);
+  color: #081226;
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  cursor: pointer;
+}
+.contact-submit:hover {
+  filter: brightness(1.1);
+}
+.contact-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.contact-feedback {
+  font-family: "Press Start 2P", monospace;
+  font-size: 9px;
+  padding: 8px;
+  border-radius: 6px;
+  text-align: center;
+}
+.contact-feedback.ok {
+  background: var(--ok);
+  color: #14311f;
+}
+.contact-feedback.error {
+  background: #ff6e6e;
+  color: #3a0000;
+}
