@@ -680,6 +680,7 @@ body {
 
 .terminal {
   height: 100%;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   font-family: "Press Start 2P", monospace;
@@ -691,6 +692,7 @@ body {
 
 .terminal-output {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   padding: 6px 2px;
 }
