@@ -4,6 +4,6 @@ export default function robots() {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "http://localhost:3000/sitemap.xml",
+    sitemap: "https://perseus-os.vercel.app/sitemap.xml",
   };
 }

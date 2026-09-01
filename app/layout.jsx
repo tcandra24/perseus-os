@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  metadataBase: new URL("http://localhost:3000"), // 👈 ganti setelah deploy
+  metadataBase: new URL("https://perseus-os.vercel.app"), // 👈 ganti setelah deploy
   title: "Perseus OS",
   description: "Portofolio interaktif bergaya desktop OS retro-anime milik Perseus.",
 };

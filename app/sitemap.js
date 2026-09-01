@@ -1,7 +1,7 @@
 import { APPS } from "@/data/apps";
 
 export default function sitemap() {
-  const base = "http://localhost:3000";
+  const base = "https://perseus-os.vercel.app";
 
   const appUrls = APPS.map((app) => ({
     url: `${base}/?app=${app.id}`,
