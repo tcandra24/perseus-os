@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { APPS } from "@/data/apps";
 import HomeClient from "@/components/HomeClient";
 
@@ -29,7 +30,10 @@ export async function generateMetadata({ searchParams }) {
   };
 }
 
-export default async function Home({ searchParams }) {
-  const params = await searchParams;
-  return <HomeClient initialApp={params?.app} />;
+export default async function Home() {
+  return (
+    <Suspense fallback={null}>
+      <HomeClient />
+    </Suspense>
+  );
 }
