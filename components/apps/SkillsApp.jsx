@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export default function SkillsApp() {
+  const { t } = useLanguage();
   const [skills, setSkills] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -20,11 +22,11 @@ export default function SkillsApp() {
 
   return (
     <>
-      <div className="section-title">✦ TECH STACK</div>
+      <div className="section-title">{t.sectionSkills}</div>
       {loading && (
         <div className="loading-wrap">
           <div className="loading-spinner" />
-          <div className="loading-text">MEMUAT DATA...</div>
+          <div className="loading-text">{t.loadingData}</div>
         </div>
       )}
 
@@ -32,12 +34,16 @@ export default function SkillsApp() {
         <div className="empty-state">
           <div className="empty-state-icon">⚡</div>
           <div className="empty-state-text">
-            BELUM ADA SKILL
-            <br />
-            UNTUK DITAMPILKAN
+            {t.emptySkills.split("\n").map((line, i) => (
+              <span key={i}>
+                {line}
+                <br />
+              </span>
+            ))}
           </div>
         </div>
       )}
+
       {!loading && skills.length > 0 && (
         <div className="tag-row">
           {skills.map((s) => (

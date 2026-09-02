@@ -2,6 +2,7 @@
 
 import { useEasterEggStore } from "@/store/useEasterEggStore";
 import { useWindowStore } from "@/store/useWindowStore";
+import { useLanguage } from "@/hooks/useLanguage";
 import { useEffect, useState } from "react";
 import { useTheme } from "@/hooks/useTheme";
 import { APPS } from "@/data/apps";
@@ -19,6 +20,8 @@ export default function Taskbar() {
   const { theme, toggleTheme } = useTheme();
 
   const THEME_ICONS = { blue: "🌙", sakura: "🌸", matrix: "💻" };
+
+  const { lang, toggleLang } = useLanguage();
 
   function handleLogoClick() {
     clickCountRef.current += 1;
@@ -45,25 +48,32 @@ export default function Taskbar() {
   const openIds = Object.keys(windows);
 
   return (
-    <div className="taskbar">
-      <div className="task-logo" onClick={handleLogoClick} style={{ cursor: "pointer" }}>
-        ✧ PERSEUS-OS
+    <div className="taskbar justify-between">
+      <div className="flex gap-2">
+        <div className="task-logo" onClick={handleLogoClick} style={{ cursor: "pointer" }}>
+          ✧ PERSEUS-OS
+        </div>
+        <div className="task-items">
+          {openIds.map((id) => {
+            const meta = APPS.find((a) => a.id === id);
+            if (!meta) return null;
+            return (
+              <div key={id} className="task-item" onClick={() => focusWindow(id)}>
+                <span>{meta.icon}</span> {meta.title}
+              </div>
+            );
+          })}
+        </div>
       </div>
-      <div className="task-items">
-        {openIds.map((id) => {
-          const meta = APPS.find((a) => a.id === id);
-          if (!meta) return null;
-          return (
-            <div key={id} className="task-item" onClick={() => focusWindow(id)}>
-              <span>{meta.icon}</span> {meta.title}
-            </div>
-          );
-        })}
+      <div className="flex gap-2">
+        <button className="theme-toggle" onClick={toggleTheme} title="Ganti tema">
+          {THEME_ICONS[theme]}
+        </button>
+        <button className="theme-toggle" onClick={toggleLang} title="Switch language">
+          {lang === "id" ? "🇮🇩" : "🇬🇧"}
+        </button>
+        <div className="clock">{time}</div>
       </div>
-      <button className="theme-toggle" onClick={toggleTheme} title="Ganti tema">
-        {THEME_ICONS[theme]}
-      </button>
-      <div className="clock">{time}</div>
     </div>
   );
 }

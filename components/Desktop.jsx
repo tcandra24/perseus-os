@@ -3,6 +3,7 @@
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import { useWindowStore } from "@/store/useWindowStore";
 import ContextMenu from "@/components/ContextMenu";
+import { useLanguage } from "@/hooks/useLanguage";
 import { AnimatePresence } from "framer-motion";
 import EasterEgg from "@/components/EasterEgg";
 import { useTheme } from "@/hooks/useTheme";
@@ -29,6 +30,8 @@ export default function Desktop() {
   const router = useRouter();
 
   const THEME_LABELS = { blue: "🌸 GANTI KE SAKURA", sakura: "💻 GANTI KE MATRIX", matrix: "🌙 GANTI KE BIRU" };
+
+  const { t } = useLanguage();
 
   const contextItems = [
     { label: "🔄 REFRESH DESKTOP", onClick: () => window.location.reload() },
@@ -69,7 +72,14 @@ export default function Desktop() {
         </div>
       )}
 
-      <div className="hint">★ KLIK ICON UNTUK BUKA WINDOW ★</div>
+      <div className="hint">
+        {t.hint.split("\n").map((line, i) => (
+          <span key={i}>
+            {line}
+            <br />
+          </span>
+        ))}
+      </div>
 
       <AnimatePresence>
         {Object.entries(windows).map(([id, win]) => {

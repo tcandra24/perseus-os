@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const STORAGE_KEY = "portfolio-os-theme";
+const STORAGE_KEY = "perseus-os-theme";
 const THEMES = ["blue", "sakura", "matrix"];
 
 export function useTheme() {

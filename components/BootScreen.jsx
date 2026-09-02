@@ -1,8 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export default function BootScreen({ onDone }) {
   const [progress, setProgress] = useState(0);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -24,7 +26,10 @@ export default function BootScreen({ onDone }) {
       <div className="boot-bar">
         <div className="boot-bar-fill" style={{ width: `${Math.min(progress, 100)}%` }} />
       </div>
-      <div className="boot-text">LOADING{"".padEnd(Math.floor(progress / 20), ".")}</div>
+      <div className="boot-text">
+        {t.bootLoading}
+        {"".padEnd(Math.floor(progress / 20), ".")}
+      </div>
     </div>
   );
 }

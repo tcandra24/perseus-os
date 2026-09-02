@@ -1,56 +1,32 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
 import { PROJECTS as FALLBACK_PROJECTS } from "@/data/projects";
 import { SKILLS as FALLBACK_SKILLS } from "@/data/skills";
+import { useState, useRef, useEffect } from "react";
+import { useLanguage } from "@/hooks/useLanguage";
 
-const BOOT_LINES = ["PERSEUS-OS TERMINAL v1.0", "Ketik 'help' untuk lihat semua command."];
-
-function runCommand(input, projects, skills) {
+function runCommand(input, projects, skills, t) {
   const cmd = input.trim().toLowerCase();
-
   if (cmd === "") return [];
-  if (cmd === "help") {
-    return [
-      "COMMAND YANG TERSEDIA:",
-      "  whoami        - tentang saya",
-      "  skills        - tech stack",
-      "  projects      - daftar proyek",
-      "  contact       - cara hubungi saya",
-      "  sudo hire-me  - ??? coba aja",
-      "  cv / resume   - download CV saya",
-      "  clear         - bersihkan layar",
-    ];
-  }
-  if (cmd === "whoami") {
-    return ["Perseus — Full-Stack Developer & AI Content Creator", "Base: Indonesia. Stack: Next.js, Laravel, Supabase, Express.js.", "Juga bikin video sinematik AI-generated untuk short-form content."];
-  }
-  if (cmd === "skills") {
-    return [skills.join(", ")];
-  }
+  if (cmd === "help") return t.terminalHelp;
+  if (cmd === "whoami") return t.terminalWhoami;
+  if (cmd === "skills") return [skills.join(", ")];
   if (cmd === "projects") {
-    return projects.map((p) => `- ${p.name} [${p.status === "done" ? "SELESAI" : "ON PROGRESS"}]`);
+    return projects.map((p) => `- ${p.name} [${p.status === "done" ? "DONE" : "WIP"}]`);
   }
-  if (cmd === "contact") {
-    return ["email@perseus.dev", "github.com/perseus", "tiktok.com/@perseus"];
-  }
-  if (cmd === "sudo hire-me") {
-    return ["Permission granted. ✦", "Perseus sedang terbuka untuk kolaborasi/kerja sama.", "Buka window Contact buat kirim pesan langsung!"];
-  }
+  if (cmd === "contact") return ["email@perseus.dev", "github.com/perseus", "tiktok.com/@perseus"];
   if (cmd === "cv" || cmd === "resume") {
-    if (typeof window !== "undefined") {
-      window.open("/cv/perseus-cv.pdf", "_blank");
-    }
-    return ["Membuka CV di tab baru... 📄"];
+    if (typeof window !== "undefined") window.open("/cv/perseus-cv.pdf", "_blank");
+    return ["Opening CV in new tab... 📄"];
   }
-  if (cmd === "clear") {
-    return { clear: true };
-  }
-  return [`command not found: ${cmd} — ketik 'help' untuk daftar command`];
+  if (cmd === "sudo hire-me") return t.terminalHireMe;
+  if (cmd === "clear") return { clear: true };
+  return [t.terminalNotFound(cmd)];
 }
 
 export default function TerminalApp() {
-  const [lines, setLines] = useState(BOOT_LINES);
+  const { t } = useLanguage();
+  const [lines, setLines] = useState(t.terminalWelcome);
   const [input, setInput] = useState("");
   const [history, setHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
@@ -66,7 +42,7 @@ export default function TerminalApp() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const result = runCommand(input, projects, skills);
+    const result = runCommand(input, projects, skills, t);
 
     if (result && result.clear) {
       setLines([]);

@@ -1,11 +1,13 @@
 "use client";
 
+import { useLanguage } from "@/hooks/useLanguage";
 import { useState } from "react";
 import Image from "next/image";
 
 export default function ProjectDetail({ project, onBack }) {
   const [index, setIndex] = useState(0);
   const images = project.images || [];
+  const { t } = useLanguage();
 
   function prev() {
     setIndex((i) => (i - 1 + images.length) % images.length);
@@ -17,7 +19,7 @@ export default function ProjectDetail({ project, onBack }) {
   return (
     <>
       <div className="detail-back" onClick={onBack}>
-        ← KEMBALI
+        {t.detailBack}
       </div>
       <div className="section-title">✦ {project.name.toUpperCase()}</div>
 
@@ -43,7 +45,7 @@ export default function ProjectDetail({ project, onBack }) {
           )}
         </div>
       ) : (
-        <div className="gallery-empty">Belum ada screenshot untuk proyek ini.</div>
+        <div className="gallery-empty">{t.galleryEmpty}</div>
       )}
 
       <p style={{ marginTop: 14 }}>{project.description}</p>
