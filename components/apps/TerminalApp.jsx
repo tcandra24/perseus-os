@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { PROJECTS } from "@/data/projects";
-import { SKILLS } from "@/data/skills";
+import { PROJECTS as FALLBACK_PROJECTS } from "@/data/projects";
+import { SKILLS as FALLBACK_SKILLS } from "@/data/skills";
 
 const BOOT_LINES = ["PERSEUS-OS TERMINAL v1.0", "Ketik 'help' untuk lihat semua command."];
 
-function runCommand(input) {
+function runCommand(input, projects, skills) {
   const cmd = input.trim().toLowerCase();
 
   if (cmd === "") return [];
@@ -26,10 +26,10 @@ function runCommand(input) {
     return ["Perseus — Full-Stack Developer & AI Content Creator", "Base: Indonesia. Stack: Next.js, Laravel, Supabase, Express.js.", "Juga bikin video sinematik AI-generated untuk short-form content."];
   }
   if (cmd === "skills") {
-    return [SKILLS.join(", ")];
+    return [skills.join(", ")];
   }
   if (cmd === "projects") {
-    return PROJECTS.map((p) => `- ${p.name} [${p.status === "done" ? "SELESAI" : "ON PROGRESS"}]`);
+    return projects.map((p) => `- ${p.name} [${p.status === "done" ? "SELESAI" : "ON PROGRESS"}]`);
   }
   if (cmd === "contact") {
     return ["email@perseus.dev", "github.com/perseus", "tiktok.com/@perseus"];
@@ -57,13 +57,16 @@ export default function TerminalApp() {
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
 
+  const [projects, setProjects] = useState(FALLBACK_PROJECTS);
+  const [skills, setSkills] = useState(FALLBACK_SKILLS);
+
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [lines]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    const result = runCommand(input);
+    const result = runCommand(input, projects, skills);
 
     if (result && result.clear) {
       setLines([]);
@@ -97,6 +100,17 @@ export default function TerminalApp() {
       }
     }
   }
+
+  useEffect(() => {
+    fetch("/api/projects")
+      .then((r) => r.json())
+      .then((d) => Array.isArray(d) && d.length && setProjects(d))
+      .catch(() => {});
+    fetch("/api/skills")
+      .then((r) => r.json())
+      .then((d) => Array.isArray(d) && d.length && setSkills(d))
+      .catch(() => {});
+  }, []);
 
   return (
     <div className="terminal p-2" onClick={() => inputRef.current?.focus()}>
