@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { track } from "@vercel/analytics";
 import emailjs from "@emailjs/browser";
+import { useState } from "react";
 
 export default function ContactApp() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -27,6 +28,7 @@ export default function ContactApp() {
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
       );
       setStatus("sent");
+      track("contact_form_submit");
       setForm({ name: "", email: "", message: "" });
     } catch (err) {
       console.error(err);

@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 
 export const metadata = {
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
       <body>
         {children}
         <ServiceWorkerRegister />
+        <Analytics />
       </body>
     </html>
   );

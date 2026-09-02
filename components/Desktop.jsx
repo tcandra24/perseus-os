@@ -8,6 +8,7 @@ import EasterEgg from "@/components/EasterEgg";
 import { useTheme } from "@/hooks/useTheme";
 import { useRouter } from "next/navigation";
 import Taskbar from "@/components/Taskbar";
+import { track } from "@vercel/analytics";
 import Window from "@/components/Window";
 import { playSound } from "@/lib/sound";
 import Stars from "@/components/Stars";
@@ -40,6 +41,8 @@ export default function Desktop() {
     playSound("/sounds/click.wav");
     openWindow(app.id, { width: app.width, height: app.height });
     router.replace(`/?app=${app.id}`, { scroll: false });
+
+    track("open_app", { app: app.id });
   }
 
   function handleContextMenu(e) {
