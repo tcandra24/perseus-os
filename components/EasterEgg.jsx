@@ -3,8 +3,10 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useEasterEggStore } from "@/store/useEasterEggStore";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export default function EasterEgg() {
+  const { t } = useLanguage();
   const active = useEasterEggStore((s) => s.active);
   const reset = useEasterEggStore((s) => s.reset);
 
@@ -27,11 +29,14 @@ export default function EasterEgg() {
             exit={shouldReduceMotion ? { opacity: 0 } : { scale: 0.7, opacity: 0 }}
             transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 260, damping: 18 }}
           >
-            <div className="easter-egg-title">✦ SECRET FOUND ✦</div>
+            <div className="easter-egg-title">{t.sectionEasterEgg}</div>
             <div className="easter-egg-text">
-              Kamu nemuin easter egg tersembunyi!
-              <br />
-              Coba buka Terminal dan ketik <b>sudo hire-me</b> 👀
+              {t.contentEasterEgg.split("\n").map((line, i) => (
+                <span key={i}>
+                  {line}
+                  <br />
+                </span>
+              ))}
             </div>
           </motion.div>
         </motion.div>

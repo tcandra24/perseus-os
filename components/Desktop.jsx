@@ -1,20 +1,21 @@
 "use client";
 
+import { useState } from "react";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import { useWindowStore } from "@/store/useWindowStore";
-import ContextMenu from "@/components/ContextMenu";
 import { useLanguage } from "@/hooks/useLanguage";
 import { AnimatePresence } from "framer-motion";
-import EasterEgg from "@/components/EasterEgg";
+import { APPS } from "@/data/apps";
 import { useTheme } from "@/hooks/useTheme";
 import { useRouter } from "next/navigation";
-import Taskbar from "@/components/Taskbar";
-import { track } from "@vercel/analytics";
-import Window from "@/components/Window";
 import { playSound } from "@/lib/sound";
+import { track } from "@vercel/analytics";
+
+import Taskbar from "@/components/Taskbar";
+import Window from "@/components/Window";
+import EasterEgg from "@/components/EasterEgg";
 import Stars from "@/components/Stars";
-import { APPS } from "@/data/apps";
-import { useState } from "react";
+import ContextMenu from "@/components/ContextMenu";
 
 export default function Desktop() {
   useKeyboardShortcuts();
