@@ -34,14 +34,14 @@ export default function ContactApp() {
         {t.sectionContact}
       </div>
 
-      <a className="contact-link" href="mailto:email@perseus.dev">
-        ✉ EMAIL@PERSEUS.DEV
+      <a className="contact-link" href="mailto:titocandradev@gmail.com">
+        ✉ TITOCANDRADEV@gmail.com
       </a>
-      <a className="contact-link" href="https://github.com/" target="_blank" rel="noreferrer">
-        💻 GITHUB/PERSEUS
+      <a className="contact-link" href="https://github.com/tcandra24" target="_blank" rel="noreferrer">
+        💻 GITHUB/TCANDRA24
       </a>
-      <a className="contact-link" href="https://tiktok.com/" target="_blank" rel="noreferrer">
-        🎬 TIKTOK/@PERSEUS
+      <a className="contact-link" href="https://www.tiktok.com/@nova.verse_ai" target="_blank" rel="noreferrer">
+        🎬 TIKTOK/@NOVA.VERSE_AI
       </a>
 
       <div className="section-title flex gap-2" style={{ marginTop: 20 }}>
