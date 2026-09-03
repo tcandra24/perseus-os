@@ -39,18 +39,15 @@ export default function Desktop() {
   const openWindow = useWindowStore((s) => s.openWindow);
 
   const { theme, toggleTheme } = useTheme();
+  const { t } = useLanguage();
 
   const router = useRouter();
 
-  const THEME_LABELS = { blue: "🌸 GANTI KE SAKURA", sakura: "💻 GANTI KE MATRIX", matrix: "🌙 GANTI KE BIRU" };
-
-  const { t } = useLanguage();
-
   const contextItems = [
-    { label: "🔄 REFRESH DESKTOP", onClick: () => window.location.reload() },
-    { label: "🎀 BUKA ABOUT ME", onClick: () => handleOpen(APPS.find((a) => a.id === "about")) },
-    { label: THEME_LABELS[theme], onClick: toggleTheme },
-    { label: showIcons ? "🙈 SEMBUNYIKAN ICON" : "👁 TAMPILKAN ICON", onClick: () => setShowIcons((v) => !v) },
+    { label: t.contextRefresh, onClick: () => window.location.reload() },
+    { label: t.contextAbout, onClick: () => handleOpen(APPS.find((a) => a.id === "about")) },
+    { label: t.themeNextLabel[theme], onClick: toggleTheme },
+    { label: showIcons ? t.contextShowIcon : t.contextHideIcon, onClick: () => setShowIcons((v) => !v) },
   ];
 
   const { positions, setPosition, loaded } = useIconPositions();
