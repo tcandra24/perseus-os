@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/hooks/useLanguage";
 
+import Sparkle from "@/components/Icon/Sparkle";
+
 export default function SkillsApp() {
   const { t } = useLanguage();
   const [skills, setSkills] = useState([]);
@@ -22,7 +24,10 @@ export default function SkillsApp() {
 
   return (
     <>
-      <div className="section-title">{t.sectionSkills}</div>
+      <div className="section-title flex gap-2">
+        <Sparkle />
+        {t.sectionSkills}
+      </div>
       {loading && (
         <div className="loading-wrap">
           <div className="loading-spinner" />

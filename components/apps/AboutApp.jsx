@@ -1,12 +1,20 @@
 "use client";
 import { useLanguage } from "@/hooks/useLanguage";
 
+import AvatarPortrait from "@/components/AvatarPortrait";
+import Sparkle from "@/components/Icon/Sparkle";
+import SquareText from "@/components/Icon/SquareText";
+
 export default function AboutApp() {
   const { t, lang } = useLanguage();
 
   return (
     <>
-      <div className="section-title">{t.sectionAbout}</div>
+      <AvatarPortrait src="/avatar.svg" />
+      <div className="section-title flex gap-2">
+        <Sparkle />
+        {t.sectionAbout}
+      </div>
 
       <div className="exp-item">
         <div className="exp-role">Full-Stack Developer</div>
@@ -20,7 +28,8 @@ export default function AboutApp() {
         {lang === "id" ? "Memproduksi konten video sinematik berbasis AI untuk TikTok, Reels, dan Shorts." : "Producing AI-driven cinematic video content for TikTok, Reels, and Shorts."}
       </div>
 
-      <a className="cv-download" href="/cv/perseus-cv.pdf" download="Perseus-CV.pdf">
+      <a className="cv-download flex gap-2" href="/cv/perseus-cv.pdf" download="Perseus-CV.pdf">
+        <SquareText />
         {t.cvDownload}
       </a>
     </>

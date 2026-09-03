@@ -1,7 +1,5 @@
 "use client";
 
-import { PROJECTS as FALLBACK_PROJECTS } from "@/data/projects";
-import { SKILLS as FALLBACK_SKILLS } from "@/data/skills";
 import { useState, useRef, useEffect } from "react";
 import { useLanguage } from "@/hooks/useLanguage";
 
@@ -33,8 +31,8 @@ export default function TerminalApp() {
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
 
-  const [projects, setProjects] = useState(FALLBACK_PROJECTS);
-  const [skills, setSkills] = useState(FALLBACK_SKILLS);
+  const [projects, setProjects] = useState([]);
+  const [skills, setSkills] = useState([]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });

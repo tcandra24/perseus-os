@@ -4,6 +4,11 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { useState } from "react";
 import Image from "next/image";
 
+import Sparkle from "@/components/Icon/Sparkle";
+import ArrowLeft from "@/components/Icon/ArrowLeft";
+import ChevronLeft from "@/components/Icon/ChevronLeft";
+import ChevronRight from "@/components/Icon/ChevronRight";
+
 export default function ProjectDetail({ project, onBack }) {
   const [index, setIndex] = useState(0);
   const images = project.images || [];
@@ -18,10 +23,14 @@ export default function ProjectDetail({ project, onBack }) {
 
   return (
     <>
-      <div className="detail-back" onClick={onBack}>
+      <div className="detail-back flex gap-2" onClick={onBack}>
+        <ArrowLeft />
         {t.detailBack}
       </div>
-      <div className="section-title">✦ {project.name.toUpperCase()}</div>
+      <div className="section-title flex gap-2">
+        <Sparkle />
+        {project.name.toUpperCase()}
+      </div>
 
       {images.length > 0 ? (
         <div className="gallery">
@@ -31,7 +40,7 @@ export default function ProjectDetail({ project, onBack }) {
           {images.length > 1 && (
             <div className="gallery-controls">
               <button className="gallery-btn" onClick={prev}>
-                ‹
+                <ChevronLeft />
               </button>
               <div className="gallery-dots">
                 {images.map((_, i) => (
@@ -39,7 +48,7 @@ export default function ProjectDetail({ project, onBack }) {
                 ))}
               </div>
               <button className="gallery-btn" onClick={next}>
-                ›
+                <ChevronRight />
               </button>
             </div>
           )}

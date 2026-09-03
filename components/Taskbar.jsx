@@ -8,6 +8,8 @@ import { useTheme } from "@/hooks/useTheme";
 import { APPS } from "@/data/apps";
 import { useRef } from "react";
 
+import AppIcon from "@/components/AppIcon";
+
 export default function Taskbar() {
   const windows = useWindowStore((s) => s.windows);
   const focusWindow = useWindowStore((s) => s.focusWindow);
@@ -59,7 +61,7 @@ export default function Taskbar() {
             if (!meta) return null;
             return (
               <div key={id} className="task-item" onClick={() => focusWindow(id)}>
-                <span>{meta.icon}</span> {meta.title}
+                <AppIcon appId={id} size={20} /> {meta.title}
               </div>
             );
           })}

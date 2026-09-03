@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/hooks/useLanguage";
 
+import Sparkle from "@/components/Icon/Sparkle";
+
 export default function BootScreen({ onDone }) {
   const [progress, setProgress] = useState(0);
   const { t } = useLanguage();
@@ -22,7 +24,11 @@ export default function BootScreen({ onDone }) {
 
   return (
     <div className="boot-screen">
-      <div className="boot-title">✧ PERSEUS-OS ✧</div>
+      <div className="boot-title flex gap-2">
+        <Sparkle />
+        PERSEUS-OS
+        <Sparkle />
+      </div>
       <div className="boot-bar">
         <div className="boot-bar-fill" style={{ width: `${Math.min(progress, 100)}%` }} />
       </div>

@@ -4,6 +4,8 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { useState, useEffect } from "react";
 import ProjectDetail from "./ProjectDetail";
 
+import Sparkle from "@/components/Icon/Sparkle";
+
 export default function ProjectsApp() {
   const { t } = useLanguage();
   const [projects, setProjects] = useState([]);
@@ -30,7 +32,10 @@ export default function ProjectsApp() {
 
   return (
     <>
-      <div className="section-title">{t.sectionProjects}</div>
+      <div className="section-title flex gap-2">
+        <Sparkle />
+        {t.sectionProjects}
+      </div>
       {loading && (
         <div className="loading-wrap">
           <div className="loading-spinner" />

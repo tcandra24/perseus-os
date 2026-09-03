@@ -17,6 +17,17 @@ import EasterEgg from "@/components/EasterEgg";
 import Stars from "@/components/Stars";
 import ContextMenu from "@/components/ContextMenu";
 
+import AvatarPortrait from "@/components/AvatarPortrait";
+import Sparkle from "@/components/Icon/Sparkle";
+
+const ICON_SRC_MAP = {
+  about: "/avatar.svg",
+  projects: "/rocket.svg",
+  skills: "/bolt.svg",
+  contact: "/letter.svg",
+  terminal: "/pc.svg",
+};
+
 export default function Desktop() {
   useKeyboardShortcuts();
 
@@ -66,20 +77,19 @@ export default function Desktop() {
         <div className="icon-grid">
           {APPS.map((app) => (
             <div key={app.id} className="icon" onClick={() => handleOpen(app)}>
-              <div className="icon-glyph">{app.icon}</div>
+              <div className="icon-glyph">
+                <AvatarPortrait src={ICON_SRC_MAP[app.id]} variant="icon" />
+              </div>
               <div className="icon-label">{app.label}</div>
             </div>
           ))}
         </div>
       )}
 
-      <div className="hint">
-        {t.hint.split("\n").map((line, i) => (
-          <span key={i}>
-            {line}
-            <br />
-          </span>
-        ))}
+      <div className="hint flex gap-2">
+        <Sparkle />
+        {t.hint}
+        <Sparkle />
       </div>
 
       <AnimatePresence>

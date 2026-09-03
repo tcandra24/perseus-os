@@ -7,6 +7,12 @@ import { APP_CONTENT } from "@/components/apps";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { playSound } from "@/lib/sound";
 
+import AppIcon from "@/components/AppIcon";
+import Minus from "@/components/Icon/Minus";
+import Square from "@/components/Icon/Square";
+import Copy from "@/components/Icon/Copy";
+import Close from "@/components/Icon/Close";
+
 const MIN_WIDTH = 260;
 const MIN_HEIGHT = 200;
 const TASKBAR_HEIGHT = 46;
@@ -112,15 +118,15 @@ export default function Window({ id, meta }) {
     >
       <div className="title-bar" onPointerDown={handleDragPointerDown} onPointerMove={handleDragPointerMove} onPointerUp={handleDragPointerUp}>
         <div className="title-text">
-          <span>{meta.icon}</span> {meta.title}
+          <AppIcon appId={id} size={20} /> {meta.title}
         </div>
         <div className="win-controls">
           <button className="win-btn" onClick={() => minimizeWindow(id)} aria-label="Minimize">
-            –
+            <Minus />
           </button>
           {!isMobile && (
             <button className="win-btn" onClick={() => toggleMaximize(id)} aria-label="Maximize">
-              {win.isMaximized ? "❐" : "□"}
+              {win.isMaximized ? <Copy /> : <Square />}
             </button>
           )}
           <button
@@ -131,7 +137,7 @@ export default function Window({ id, meta }) {
             }}
             aria-label="Close"
           >
-            ×
+            <Close />
           </button>
         </div>
       </div>

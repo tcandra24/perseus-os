@@ -3,6 +3,8 @@ import { useState } from "react";
 import emailjs from "@emailjs/browser";
 import { useLanguage } from "@/hooks/useLanguage";
 
+import Sparkle from "@/components/Icon/Sparkle";
+
 export default function ContactApp() {
   const { t } = useLanguage();
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -27,7 +29,10 @@ export default function ContactApp() {
 
   return (
     <>
-      <div className="section-title">{t.sectionContact}</div>
+      <div className="section-title flex gap-2">
+        <Sparkle />
+        {t.sectionContact}
+      </div>
 
       <a className="contact-link" href="mailto:email@perseus.dev">
         ✉ EMAIL@PERSEUS.DEV
@@ -39,7 +44,8 @@ export default function ContactApp() {
         🎬 TIKTOK/@PERSEUS
       </a>
 
-      <div className="section-title" style={{ marginTop: 20 }}>
+      <div className="section-title flex gap-2" style={{ marginTop: 20 }}>
+        <Sparkle />
         {t.sectionContactForm}
       </div>
 
