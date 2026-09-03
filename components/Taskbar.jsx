@@ -5,6 +5,7 @@ import { useWindowStore } from "@/store/useWindowStore";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useEffect, useState } from "react";
 import { useTheme } from "@/hooks/useTheme";
+import { useSound } from "@/hooks/useSound";
 import { APPS } from "@/data/apps";
 import { useRef } from "react";
 
@@ -24,6 +25,7 @@ export default function Taskbar() {
   const THEME_ICONS = { blue: "🌙", sakura: "🌸", matrix: "💻" };
 
   const { lang, toggleLang } = useLanguage();
+  const { muted, toggleMute } = useSound();
 
   function handleLogoClick() {
     clickCountRef.current += 1;
@@ -70,6 +72,9 @@ export default function Taskbar() {
       <div className="flex gap-2">
         <button className="theme-toggle" onClick={toggleTheme} title="Ganti tema">
           {THEME_ICONS[theme]}
+        </button>
+        <button className="theme-toggle" onClick={toggleMute} title={muted ? "Unmute" : "Mute"}>
+          {muted ? "🔇" : "🔊"}
         </button>
         <button className="theme-toggle" onClick={toggleLang} title="Switch language">
           {lang === "id" ? "🇮🇩" : "🇬🇧"}

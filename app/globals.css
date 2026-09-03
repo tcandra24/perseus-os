@@ -1021,3 +1021,69 @@ body {
   height: 100%;
   display: block;
 }
+
+.notfound-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-deep);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 20px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.notfound-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 0px, rgba(0, 0, 0, 0.15) 1px, transparent 2px, transparent 3px);
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.notfound-code {
+  font-family: "Press Start 2P", monospace;
+  font-size: 64px;
+  color: var(--pink);
+  text-shadow:
+    4px 4px 0 rgba(0, 0, 0, 0.4),
+    0 0 24px rgba(255, 110, 199, 0.5);
+}
+
+.notfound-code.glitch {
+  transform: translate(3px, -2px) skewX(3deg);
+  color: var(--cyan);
+}
+
+.notfound-title {
+  font-family: "Press Start 2P", monospace;
+  font-size: 14px;
+  color: var(--text-hi);
+  letter-spacing: 1px;
+}
+
+.notfound-text {
+  font-family: "Poppins", sans-serif;
+  font-size: 13.5px;
+  color: var(--text-mid);
+  line-height: 1.7;
+  max-width: 320px;
+}
+
+.notfound-btn {
+  margin-top: 8px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  background: var(--pink);
+  color: #081226;
+  text-decoration: none;
+  padding: 12px 18px;
+  border-radius: 6px;
+  border: 2px solid var(--pink);
+}
+.notfound-btn:hover {
+  filter: brightness(1.1);
+}

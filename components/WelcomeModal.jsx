@@ -4,6 +4,9 @@ import { useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useLanguage } from "@/hooks/useLanguage";
 
+import Sparkle from "@/components/Icon/Sparkle";
+import Close from "@/components/Icon/Close";
+
 export default function WelcomeModal({ onClose }) {
   const { t } = useLanguage();
   const shouldReduceMotion = useReducedMotion();
@@ -23,9 +26,11 @@ export default function WelcomeModal({ onClose }) {
     <div className="welcome-overlay">
       <motion.div className="welcome-box" initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.9, y: 16 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.25, ease: "easeOut" }}>
         <div className="welcome-titlebar">
-          <span>✧ {t.welcomeTitle}</span>
+          <span>
+            <Sparkle /> {t.welcomeTitle}
+          </span>
           <button className="win-btn" onClick={onClose} aria-label="Close">
-            ×
+            <Close />
           </button>
         </div>
 
