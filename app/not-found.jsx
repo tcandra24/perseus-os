@@ -1,9 +1,13 @@
 "use client";
+import { useLanguage } from "@/hooks/useLanguage";
+
+import ArrowLeft from "@/components/Icon/ArrowLeft";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function NotFound() {
+  const { t } = useLanguage();
   const [glitch, setGlitch] = useState(false);
 
   useEffect(() => {
@@ -18,14 +22,18 @@ export default function NotFound() {
     <div className="notfound-screen">
       <div className="notfound-scanlines" />
       <div className={`notfound-code ${glitch ? "glitch" : ""}`}>404</div>
-      <div className="notfound-title">FILE NOT FOUND</div>
+      <div className="notfound-title">{t.notFoundTitle}</div>
       <div className="notfound-text">
-        Window yang kamu cari nggak ada di desktop ini.
-        <br />
-        Mungkin sudah di-uninstall, atau alamatnya salah ketik.
+        {t.notFoundText.split("\n").map((line, i) => (
+          <span key={i}>
+            {line}
+            <br />
+          </span>
+        ))}
       </div>
-      <Link href="/" className="notfound-btn">
-        ← KEMBALI KE DESKTOP
+      <Link href="/" className="notfound-btn flex gap-2">
+        <ArrowLeft />
+        {t.notFoundBack}
       </Link>
     </div>
   );
