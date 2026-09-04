@@ -1093,3 +1093,84 @@ body {
 .notfound-btn:hover {
   filter: brightness(1.1);
 }
+
+.snake-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.snake-hud {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  color: var(--cyan);
+}
+
+.snake-board {
+  position: relative;
+  background: #060c1f;
+  border: 3px solid var(--pink);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.snake-head,
+.snake-body,
+.snake-food {
+  position: absolute;
+  border-radius: 2px;
+}
+.snake-head {
+  background: var(--pink);
+  box-shadow: 0 0 6px var(--pink);
+}
+.snake-body {
+  background: var(--cyan);
+  opacity: 0.85;
+}
+.snake-food {
+  background: var(--yellow);
+  box-shadow: 0 0 6px var(--yellow);
+}
+
+.snake-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 12, 31, 0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.snake-overlay-title {
+  font-family: "Press Start 2P", monospace;
+  color: var(--pink);
+  font-size: 14px;
+}
+
+.snake-restart {
+  font-family: "Press Start 2P", monospace;
+  font-size: 9px;
+  background: var(--pink);
+  color: #081226;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.snake-restart:hover {
+  filter: brightness(1.1);
+}
+
+.snake-hint {
+  font-family: "Press Start 2P", monospace;
+  font-size: 8px;
+  color: var(--text-low);
+  text-align: center;
+}

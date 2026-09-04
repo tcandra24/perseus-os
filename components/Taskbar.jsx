@@ -1,13 +1,17 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import { useEasterEggStore } from "@/store/useEasterEggStore";
 import { useWindowStore } from "@/store/useWindowStore";
+import { useGameStore } from "@/store/useGameStore";
+
 import { useLanguage } from "@/hooks/useLanguage";
-import { useEffect, useState } from "react";
 import { useTheme } from "@/hooks/useTheme";
 import { useSound } from "@/hooks/useSound";
-import { APPS } from "@/data/apps";
 import { useRef } from "react";
+
+import { APPS } from "@/data/apps";
 
 import AppIcon from "@/components/AppIcon";
 
@@ -27,6 +31,8 @@ export default function Taskbar() {
   const { lang, toggleLang } = useLanguage();
   const { muted, toggleMute } = useSound();
 
+  const unlockGame = useGameStore((s) => s.unlock);
+
   function handleLogoClick() {
     clickCountRef.current += 1;
     if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
@@ -36,6 +42,7 @@ export default function Taskbar() {
 
     if (clickCountRef.current >= 5) {
       trigger();
+      unlockGame();
       clickCountRef.current = 0;
     }
   }
@@ -55,7 +62,7 @@ export default function Taskbar() {
     <div className="taskbar justify-between">
       <div className="flex gap-2">
         <div className="task-logo" onClick={handleLogoClick} style={{ cursor: "pointer" }}>
-          ✧ PERSEUS-OS
+          PERSEUS-OS
         </div>
         <div className="task-items">
           {openIds.map((id) => {

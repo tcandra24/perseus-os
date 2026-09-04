@@ -1,23 +1,28 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
-import { useWindowStore } from "@/store/useWindowStore";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useState, useRef, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
-import { APPS } from "@/data/apps";
-import { useTheme } from "@/hooks/useTheme";
 import { useRouter } from "next/navigation";
-import { playSound } from "@/lib/sound";
 import { track } from "@vercel/analytics";
+
+import { GAME_APP } from "@/data/gameApp";
+import { APPS } from "@/data/apps";
+
+import { playSound } from "@/lib/sound";
+
+import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import { useIconPositions } from "@/hooks/useIconPositions";
+import { useLanguage } from "@/hooks/useLanguage";
+import { useTheme } from "@/hooks/useTheme";
+
+import { useWindowStore } from "@/store/useWindowStore";
+import { useGameStore } from "@/store/useGameStore";
 
 import Taskbar from "@/components/Taskbar";
 import Window from "@/components/Window";
 import EasterEgg from "@/components/EasterEgg";
 import Stars from "@/components/Stars";
 import ContextMenu from "@/components/ContextMenu";
-
 import AvatarPortrait from "@/components/AvatarPortrait";
 import Sparkle from "@/components/Icon/Sparkle";
 
@@ -27,6 +32,7 @@ const ICON_SRC_MAP = {
   skills: "/bolt.svg",
   contact: "/letter.svg",
   terminal: "/pc.svg",
+  game: "/snake.svg",
 };
 
 export default function Desktop() {
@@ -42,6 +48,9 @@ export default function Desktop() {
   const { t } = useLanguage();
 
   const router = useRouter();
+
+  const gameUnlocked = useGameStore((s) => s.unlocked);
+  const loadGameStatus = useGameStore((s) => s.load);
 
   const contextItems = [
     { label: t.contextRefresh, onClick: () => window.location.reload() },
@@ -115,6 +124,10 @@ export default function Desktop() {
     handleOpen(app);
   }
 
+  useEffect(() => {
+    loadGameStatus();
+  }, [loadGameStatus]);
+
   return (
     <div className="desktop" onContextMenu={handleContextMenu}>
       <div className="grid-floor" />
@@ -143,6 +156,23 @@ export default function Desktop() {
                 </div>
               );
             })}
+
+          {loaded && gameUnlocked && (
+            <div
+              key="game"
+              className="icon"
+              style={{ transform: `translate(${getIconPosition(GAME_APP, APPS.length).x}px, ${getIconPosition(GAME_APP, APPS.length).y}px)` }}
+              onPointerDown={(e) => handleIconPointerDown(e, GAME_APP, APPS.length)}
+              onPointerMove={handleIconPointerMove}
+              onPointerUp={handleIconPointerUp}
+              onClick={() => handleIconClick(GAME_APP)}
+            >
+              <div className="icon-glyph">
+                <AvatarPortrait src={ICON_SRC_MAP.game} variant="icon" />
+              </div>
+              <div className="icon-label">{GAME_APP.label}</div>
+            </div>
+          )}
         </div>
       )}
 
@@ -155,7 +185,7 @@ export default function Desktop() {
       <AnimatePresence>
         {Object.entries(windows).map(([id, win]) => {
           if (win.isMinimized) return null;
-          const meta = APPS.find((a) => a.id === id);
+          const meta = APPS.find((a) => a.id === id) || (id === GAME_APP.id ? GAME_APP : null);
           if (!meta) return null;
           return <Window key={id} id={id} meta={meta} />;
         })}
