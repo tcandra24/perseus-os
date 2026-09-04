@@ -1,6 +1,8 @@
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
+
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
+import StructuredData from "@/components/StructuredData";
 
 export const metadata = {
   metadataBase: new URL("https://perseus-os.vercel.app"),
@@ -16,6 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="id">
       <body>
+        <StructuredData />
         {children}
         <ServiceWorkerRegister />
         <Analytics />
