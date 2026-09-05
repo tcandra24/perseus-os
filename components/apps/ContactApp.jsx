@@ -9,6 +9,7 @@ export default function ContactApp() {
   const { t } = useLanguage();
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState("idle");
+  const [honeypot, setHoneypot] = useState("");
 
   function handleChange(e) {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -16,10 +17,25 @@ export default function ContactApp() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    const lastSubmit = localStorage.getItem("contact-last-submit");
+    const now = Date.now();
+    if (lastSubmit && now - parseInt(lastSubmit, 10) < 60000) {
+      setStatus("error");
+      return;
+    }
+
+    if (honeypot.trim() !== "") {
+      setStatus("sent");
+      setForm({ name: "", email: "", message: "" });
+      return;
+    }
+
     setStatus("sending");
     try {
       await emailjs.send(process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID, process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID, { from_name: form.name, from_email: form.email, message: form.message }, process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY);
       setStatus("sent");
+      localStorage.setItem("contact-last-submit", String(now));
       setForm({ name: "", email: "", message: "" });
     } catch (err) {
       console.error(err);
@@ -50,6 +66,8 @@ export default function ContactApp() {
       </div>
 
       <form className="contact-form" onSubmit={handleSubmit}>
+        <input type="text" name="company_website" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} className="honeypot-field" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+
         <input className="contact-input" name="name" placeholder={t.formName} value={form.name} onChange={handleChange} required />
         <input className="contact-input" type="email" name="email" placeholder={t.formEmail} value={form.email} onChange={handleChange} required />
         <textarea className="contact-input contact-textarea" name="message" placeholder={t.formMessage} value={form.message} onChange={handleChange} rows={4} required />
