@@ -33,6 +33,7 @@ const ICON_SRC_MAP = {
   contact: "/letter.svg",
   terminal: "/pc.svg",
   game: "/snake.svg",
+  guestbook: "/book.svg",
 };
 
 export default function Desktop() {

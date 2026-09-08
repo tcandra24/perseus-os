@@ -4,6 +4,8 @@ const ICON_MAP = {
   skills: "sliders",
   contact: "message-text",
   terminal: "terminal",
+  game: "game",
+  guestbook: "book",
 };
 
 export default function AppIcon({ appId, size = 20 }) {
