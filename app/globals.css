@@ -15,6 +15,7 @@
   --text-low: #7688b3;
   --ok: #7dffb0;
   --wip: #ffe37e;
+  --link: #ff937e;
 }
 
 [data-theme="sakura"] {
@@ -31,6 +32,7 @@
   --text-low: #a97a95;
   --ok: #b6f2c0;
   --wip: #ffd9a0;
+  --link: #ffb0a0;
 }
 
 [data-theme="matrix"] {
@@ -47,6 +49,7 @@
   --text-low: #3d8a52;
   --ok: #39ff6a;
   --wip: #b6ff9c;
+  --link: #ceff9c;
 }
 
 /* efek "digital rain" tipis di scanline khusus tema matrix */
@@ -305,6 +308,19 @@ body {
   font-weight: 700;
   font-size: 14px;
 }
+
+.project-link {
+  font-family: "Press Start 2P", monospace;
+  font-size: 9px;
+  padding: 4px 8px;
+  border-radius: 100px;
+  border: 2px solid;
+  white-space: nowrap;
+  color: #14311f;
+  background: var(--link);
+  border-color: var(--link);
+}
+
 .badge {
   font-family: "Press Start 2P", monospace;
   font-size: 8px;

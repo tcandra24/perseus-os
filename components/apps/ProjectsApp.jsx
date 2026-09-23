@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import ProjectDetail from "./ProjectDetail";
 
 import Sparkle from "@/components/Icon/Sparkle";
+import ExternalLink from "@/components/Icon/ExternalLink";
 
 export default function ProjectsApp() {
   const { t } = useLanguage();
@@ -59,7 +60,7 @@ export default function ProjectsApp() {
 
       {!loading &&
         projects.map((p) => (
-          <div className="project-card project-card-clickable" key={p.slug} onClick={() => setSelected(p)}>
+          <div className="project-card project-card-clickable space-y-3" key={p.slug} onClick={() => setSelected(p)}>
             <div className="project-head">
               <span className="project-name">{p.name}</span>
               <span className={`badge badge-${p.status}`}>{p.status === "done" ? t.statusDone : t.statusWip}</span>
@@ -71,6 +72,14 @@ export default function ProjectsApp() {
                   {tag}
                 </span>
               ))}
+            </div>
+            <div className="w-full flex justify-end">
+              {p.link && (
+                <a onClick={(e) => e.stopPropagation()} className="project-link flex gap-2 items-center" href={p.link} target="_blank" rel="noopener noreferrer">
+                  Link
+                  <ExternalLink />
+                </a>
+              )}
             </div>
           </div>
         ))}
