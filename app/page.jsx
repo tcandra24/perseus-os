@@ -9,10 +9,10 @@ export async function generateMetadata({ searchParams }) {
   if (!meta) {
     return {
       title: "Perseus OS",
-      description: "Portofolio interaktif bergaya desktop OS retro-anime milik Perseus.",
+      description: "Perseus's retro-anime desktop OS-style interactive portfolio.",
       openGraph: {
         title: "Perseus OS",
-        description: "Portofolio interaktif bergaya desktop OS retro-anime milik Perseus.",
+        description: "Perseus's retro-anime desktop OS-style interactive portfolio.",
         images: ["/og-default.png"],
       },
     };
