@@ -9,6 +9,9 @@ import ArrowLeft from "@/components/Icon/ArrowLeft";
 import ChevronLeft from "@/components/Icon/ChevronLeft";
 import ChevronRight from "@/components/Icon/ChevronRight";
 
+import ExternalLink from "@/components/Icon/ExternalLink";
+import Github from "@/components/Icon/Github";
+
 export default function ProjectDetail({ project, onBack }) {
   const [index, setIndex] = useState(0);
   const images = project.images || [];
@@ -56,7 +59,21 @@ export default function ProjectDetail({ project, onBack }) {
       ) : (
         <div className="gallery-empty">{t.galleryEmpty}</div>
       )}
-
+      <div className="project-meta-row">
+        {project.version && <span className="project-version">v{project.version.replace(/^v/i, "")}</span>}
+        {project.githubUrl && (
+          <a href={project.githubUrl} target="_blank" rel="noreferrer noopener" className="project-meta-link flex gap-1 items-center">
+            {t.projectGithub}
+            <Github />
+          </a>
+        )}
+        {project.liveUrl && (
+          <a href={project.liveUrl} target="_blank" rel="noreferrer" className="project-meta-link flex gap-1 items-center">
+            {t.projectLiveDemo}
+            <ExternalLink />
+          </a>
+        )}
+      </div>
       <p style={{ marginTop: 14 }}>{project.description}</p>
       <div className="tag-row">
         {project.tags.map((t) => (

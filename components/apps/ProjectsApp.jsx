@@ -74,9 +74,9 @@ export default function ProjectsApp() {
               ))}
             </div>
             <div className="w-full flex justify-end">
-              {p.link && (
-                <a onClick={(e) => e.stopPropagation()} className="project-link flex gap-2 items-center" href={p.link} target="_blank" rel="noopener noreferrer">
-                  Link
+              {p.liveUrl && (
+                <a onClick={(e) => e.stopPropagation()} className="project-link flex gap-2 items-center" href={p.liveUrl} target="_blank" rel="noopener noreferrer">
+                  {t.projectLiveDemo}
                   <ExternalLink />
                 </a>
               )}
